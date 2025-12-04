@@ -1,6 +1,13 @@
 body {
     background-image: url(https://i.ibb.co/CpPhwPzR/Gemini-Generated-Image-jc94bvjc94bvjc94.jpg);
     background-size: cover;
+    background-repeat: no-repeat;
+
+    @media screen and (max-width: 414px) {
+        background-image: url('https://i.ibb.co/spxwbxd9/twink2-1.jpg');
+        background-repeat: no-repeat;
+    }
+    
 }
 
 .par {
@@ -12,9 +19,4 @@ body {
 h1 {
     padding-top: 20vh;
     color: yellow;
-    text-shadow: 
-    -1px -1px 0 black,
-    1px -1px 0 black,
-    -1px 1px 0 black,
-    1px 1px 0 black;
 }
