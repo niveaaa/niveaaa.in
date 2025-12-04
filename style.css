@@ -1,0 +1,15 @@
+body {
+    background-image: url(https://i.ibb.co/CpPhwPzR/Gemini-Generated-Image-jc94bvjc94bvjc94.jpg);
+    background-size: cover;
+}
+
+.par {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    padding-top: 20vh;
+    color: yellow;
+}
