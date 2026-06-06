@@ -1,0 +1,61 @@
+:root{
+  --bg-0:#be58a3;
+  --bg-1:#462739;
+  --card-glow:linear-gradient(135deg,#06b6d4 0%, #6366f1 100%);
+  --text:#e6eef6;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  background: linear-gradient(180deg,var(--bg-0) 0%, var(--bg-1) 100%);
+  color:var(--text);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:32px;
+}
+.page{display:flex;flex-direction:column;align-items:center;gap:24px;width:100%;max-width:1120px}
+.title{margin:0;font-size:1.25rem;font-weight:600;color:#fff;text-align:center}
+.video-wrapper{
+  width: min(500px, 80vw);
+  aspect-ratio: 1/1;
+  background: transparent;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: none;
+  position: relative;
+  transition: transform .25s ease, box-shadow .25s ease;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+}
+.video-wrapper:hover{transform: translateY(-6px);box-shadow: 0 30px 60px rgba(2,6,23,0.7)}
+
+.video-frame{
+  width: 100%;
+  aspect-ratio: 1/1;
+  background:#000;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow: 0 12px 30px rgba(2,6,23,0.55);
+  position: relative;
+}
+.video-frame iframe{width:100%;height:100%;border:0;display:block}
+.video-click-target{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  border:0;
+  padding:0;
+  background:transparent;
+  cursor:pointer;
+}
+.video-click-target:focus-visible{outline:2px solid rgba(255,255,255,0.75);outline-offset:-6px}
+@media (max-width:420px){
+  .video-wrapper{border-radius:12px;padding:12px}
+  .video-frame{width:96%}
+  .title{font-size:1rem}
+}
