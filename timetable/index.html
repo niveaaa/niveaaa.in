@@ -391,6 +391,28 @@
     let currentFilter = 'all';
     const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
     const DAY_ABBR = ['MON', 'TUE', 'WED', 'THU', 'FRI'];
+    const ALL_DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+    function getActualDayName() {
+      return ALL_DAYS[new Date().getDay()];
+    }
+
+    function getMondayOfWeek(d = new Date()) {
+      const day = d.getDay(); // 0=Sun, 1=Mon ... 6=Sat
+      const monday = new Date(d);
+      if (day === 0) {
+        // Sunday: school week starts tomorrow (+1 day)
+        monday.setDate(d.getDate() + 1);
+      } else if (day === 6) {
+        // Saturday: school week starts in 2 days (+2 days)
+        monday.setDate(d.getDate() + 2);
+      } else {
+        // Mon-Fri: Monday of current school week
+        monday.setDate(d.getDate() - (day - 1));
+      }
+      monday.setHours(0, 0, 0, 0);
+      return monday;
+    }
 
     // ── Bootstrap ──
     async function init() {
@@ -442,11 +464,12 @@
     // ── Clock ──
     function updateClock() {
       const now = new Date();
+      const dayAbbr = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][now.getDay()];
       const h = now.getHours();
       const m = String(now.getMinutes()).padStart(2, '0');
       const ampm = h >= 12 ? 'PM' : 'AM';
       const hh = h % 12 || 12;
-      document.getElementById('live-clock').textContent = `${String(hh).padStart(2, '0')}:${m} ${ampm}`;
+      document.getElementById('live-clock').textContent = `${dayAbbr} • ${String(hh).padStart(2, '0')}:${m} ${ampm}`;
     }
 
     // ── Dark Mode ──
@@ -477,25 +500,26 @@
     // ── Day Tabs ──
     function renderDayTabs() {
       const container = document.getElementById('day-tabs');
-      // Get current week's dates
-      const today = new Date();
-      const dayOfWeek = today.getDay(); // 0=Sun
-      const monday = new Date(today);
-      monday.setDate(today.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1));
+      const monday = getMondayOfWeek(new Date());
+      const actualToday = getActualDayName();
 
       container.innerHTML = DAYS.map((day, i) => {
         const d = new Date(monday);
         d.setDate(monday.getDate() + i);
         const dateNum = d.getDate();
-        const isActive = day === currentDay;
-        const activeClass = isActive
+        const isSelected = day === currentDay;
+        const isActuallyToday = day === actualToday;
+        const activeClass = isSelected
           ? 'bg-primary text-on-primary shadow-sm'
           : 'text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high';
         return `
           <button onclick="switchDay('${day}')"
-            class="flex-1 flex flex-col items-center justify-center py-1 rounded transition-all ${activeClass}">
-            <span class="font-mono text-label-sm leading-none">${DAY_ABBR[i]}</span>
-            <span class="font-mono text-label-md leading-none mt-0.5 ${isActive ? 'font-bold' : ''}">${dateNum}</span>
+            class="flex-1 flex flex-col items-center justify-center py-1 rounded transition-all relative ${activeClass}">
+            <span class="font-mono text-label-sm leading-none flex items-center justify-center gap-1">
+              ${DAY_ABBR[i]}
+              ${isActuallyToday ? `<span class="w-1.5 h-1.5 rounded-full ${isSelected ? 'bg-on-primary' : 'bg-primary'} inline-block"></span>` : ''}
+            </span>
+            <span class="font-mono text-label-md leading-none mt-0.5 ${isSelected ? 'font-bold' : ''}">${dateNum}</span>
           </button>
         `;
       }).join('');
@@ -567,14 +591,24 @@
       const dateBadge = document.getElementById('current-date-badge');
 
       // Date badge
-      const today = new Date();
-      const dayOfWeek = today.getDay();
-      const monday = new Date(today);
-      monday.setDate(today.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1));
+      const monday = getMondayOfWeek(new Date());
       const dayIndex = DAYS.indexOf(day);
       const targetDate = new Date(monday);
       targetDate.setDate(monday.getDate() + dayIndex);
-      dateBadge.textContent = `${day}, ${targetDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`;
+
+      const actualDay = getActualDayName();
+      const actualDayIndex = new Date().getDay(); // 0=Sun, 6=Sat
+      const formattedDate = targetDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+      if (day === actualDay) {
+        dateBadge.textContent = `${day}, ${formattedDate} • Today`;
+      } else if (actualDayIndex === 0 && day === 'Monday') {
+        dateBadge.textContent = `${day}, ${formattedDate} • Tomorrow`;
+      } else if (actualDayIndex === 6 && day === 'Monday') {
+        dateBadge.textContent = `${day}, ${formattedDate} • Upcoming Mon`;
+      } else {
+        dateBadge.textContent = `${day}, ${formattedDate}`;
+      }
 
       const entries = (scheduleData.schedule && scheduleData.schedule[day]) || [];
 
@@ -593,11 +627,8 @@
       emptyState.classList.add('hidden');
 
       const now = nowMinutes();
-      const currentDayOfWeek = today.getDay(); // 0=Sun, 1=Mon...5=Fri, 6=Sat
-      const isWeekday = currentDayOfWeek >= 1 && currentDayOfWeek <= 5;
-      const todayName = isWeekday ? DAYS[currentDayOfWeek - 1] : 'Monday';
-      // Weekdays: only actual day of week is today. Weekends: selected day is treated as active
-      const isToday = isWeekday ? (day === todayName) : (day === currentDay);
+      const actualTodayName = getActualDayName();
+      const isToday = (day === actualTodayName);
 
       // Find current & next class for hero card
       let currentClass = null;

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'f18-timetable-v1';
+const CACHE_NAME = 'f18-timetable-v2';
 const PRECACHE_ASSETS = [
   './',
   './index.html',
