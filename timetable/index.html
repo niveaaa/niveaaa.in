@@ -408,10 +408,17 @@
       }
 
       renderDayTabs();
-      renderDay(currentDay);
+      renderDay(currentDay, true);
 
-      // Auto-refresh every 5s so realtime class highlight and progress update live
-      setInterval(() => renderDay(currentDay), 5000);
+      // Check every 5s, but only re-render if the minute actually changes, silently without animation
+      let lastMinute = nowMinutes();
+      setInterval(() => {
+        const currentMin = nowMinutes();
+        if (currentMin !== lastMinute) {
+          lastMinute = currentMin;
+          renderDay(currentDay, false);
+        }
+      }, 5000);
 
       // Auto-scroll to active card if one exists
       setTimeout(() => {
@@ -487,7 +494,7 @@
     function switchDay(day) {
       currentDay = day;
       renderDayTabs();
-      renderDay(day);
+      renderDay(day, true);
     }
 
     // ── Filter (disabled — no filter UI) ──
@@ -543,7 +550,7 @@
     }
 
     // ── Render Day ──
-    function renderDay(day) {
+    function renderDay(day, withAnimation = false) {
       const container = document.getElementById('timeline-container');
       const heroCard  = document.getElementById('hero-card');
       const emptyState = document.getElementById('empty-state');
@@ -630,9 +637,9 @@
         }
 
         if (entry.type === 'break') {
-          html += renderBreakCard(entry, isPast, isActive, idx);
+          html += renderBreakCard(entry, isPast, isActive, idx, withAnimation);
         } else {
-          html += renderClassCard(entry, isPast, isActive, isFuture, idx);
+          html += renderClassCard(entry, isPast, isActive, isFuture, idx, withAnimation);
         }
 
         // Insert NOW ticker after active card
@@ -760,7 +767,7 @@
       return 'Lecture';
     }
 
-    function renderClassCard(entry, isPast, isActive, isFuture, idx) {
+    function renderClassCard(entry, isPast, isActive, isFuture, idx, withAnimation = false) {
       const { start, end } = parseTimeRange(entry.time);
       const icon = TYPE_ICON[entry.type] || 'auto_stories';
       const now = nowMinutes();
@@ -866,7 +873,7 @@
       }
 
       return `
-        <div class="timeline-item ${isActive ? 'timeline-active' : ''} animate-slide-up relative mb-6" data-type="${entry.type}">
+        <div class="timeline-item ${isActive ? 'timeline-active' : ''} ${withAnimation ? 'animate-slide-up' : ''} relative mb-6" data-type="${entry.type}">
           ${nodeHtml}
           <div class="flex items-center justify-between mb-1.5">
             <span class="font-mono text-label-md ${timeColor}">${formatTime12(start)} – ${formatTime12(end)}</span>
@@ -897,7 +904,7 @@
     }
 
     // ── Break Card ──
-    function renderBreakCard(entry, isPast, isActive, idx) {
+    function renderBreakCard(entry, isPast, isActive, idx, withAnimation = false) {
       const { start, end } = parseTimeRange(entry.time);
       const now = nowMinutes();
       const nodeOpacity = isPast ? 'bg-outline-variant' : isActive ? 'bg-tertiary-fixed border-2 border-tertiary' : 'bg-surface-container-high';
@@ -912,7 +919,7 @@
       }
 
       return `
-        <div class="timeline-item ${isActive ? 'timeline-active' : ''} animate-slide-up relative mb-6" data-type="break">
+        <div class="timeline-item ${isActive ? 'timeline-active' : ''} ${withAnimation ? 'animate-slide-up' : ''} relative mb-6" data-type="break">
           <div class="absolute -left-12 top-3 w-[16px] h-[16px] rounded-full ${nodeOpacity} flex items-center justify-center">
             ${nodeContent}
           </div>
