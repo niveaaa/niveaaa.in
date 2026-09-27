@@ -1,0 +1,175 @@
+{
+  "meta": {
+    "semester": "Fall 2026",
+    "section": "F18",
+    "lastUpdated": "2026-09-27"
+  },
+  "schedule": {
+    "Monday": [
+      {
+        "subject": "DSA",
+        "time": "9:00 – 9:50",
+        "room": "??",
+        "type": "lecture"
+      },
+      {
+        "subject": "MFAIDS",
+        "time": "10:00 – 10:50",
+        "room": "3045",
+        "type": "lecture"
+      },
+      {
+        "subject": "Software Engineering x2",
+        "time": "11:00 – 12:50",
+        "room": "3045",
+        "type": "lecture"
+      },
+      {
+        "subject": "Break",
+        "time": "13:00 – 14:00",
+        "room": "jahan mrzi jao",
+        "type": "break"
+      },
+      {
+        "subject": "DSA",
+        "time": "14:00 – 14:50",
+        "room": "3098",
+        "type": "lecture"
+      },
+      {
+        "subject": "DBMS",
+        "time": "15:00 – 15:50",
+        "room": "3098",
+        "type": "lecture"
+      }
+    ],
+    "Tuesday": [
+      {
+        "subject": "DSA",
+        "time": "11:00 – 12:50",
+        "room": "CyberSecurity-Lab",
+        "type": "lab"
+      },
+      {
+        "subject": "Break",
+        "time": "13:00 – 14:00",
+        "room": "jahan mrzi jao",
+        "type": "break"
+      },
+      {
+        "subject": "Economics",
+        "time": "14:00 – 14:50",
+        "room": "3045",
+        "type": "lecture"
+      },
+      {
+        "subject": "MFAIDS",
+        "time": "15:00 – 15:50",
+        "room": "3045",
+        "type": "lecture"
+      }
+    ],
+    "Wednesday": [
+      {
+        "subject": "Unix Programming",
+        "time": "9:00 – 9:50",
+        "room": "??",
+        "type": "lecture"
+      },
+      {
+        "subject": "MFAIDS",
+        "time": "10:00 – 10:50",
+        "room": "3093",
+        "type": "lecture"
+      },
+      {
+        "subject": "Break",
+        "time": "11:00 – 12:00",
+        "room": "jahan mrzi jao",
+        "type": "break"
+      },
+      {
+        "subject": "MFAIDS",
+        "time": "12:00 – 12:50",
+        "room": "244",
+        "type": "tutorial"
+      },
+      {
+        "subject": "Break",
+        "time": "13:00 – 14:00",
+        "room": "jahan mrzi jao",
+        "type": "break"
+      },
+      {
+        "subject": "Unix Programming",
+        "time": "14:00 – 15:50",
+        "room": "CyberSecurity-Lab",
+        "type": "lab"
+      }
+    ],
+    "Thursday": [
+      {
+        "subject": "DBMS",
+        "time": "9:00 – 9:50",
+        "room": "??",
+        "type": "lecture"
+      },
+      {
+        "subject": "DSA",
+        "time": "10:00 – 10:50",
+        "room": "244B",
+        "type": "lecture"
+      },
+      {
+        "subject": "Break",
+        "time": "11:00 – 14:00",
+        "room": "jahan mrzi jao",
+        "type": "break"
+      },
+      {
+        "subject": "Python",
+        "time": "14:00 – 15:50",
+        "room": "CyberSecurity-Lab",
+        "type": "lab"
+      }
+    ],
+    "Friday": [
+      {
+        "subject": "Economics",
+        "time": "9:00 – 9:50",
+        "room": "3117",
+        "type": "tutorial"
+      },
+      {
+        "subject": "Economics",
+        "time": "10:00 – 10:50",
+        "room": "3040",
+        "type": "lecture"
+      },
+      {
+        "subject": "DSA",
+        "time": "11:00 – 11:50",
+        "room": "??",
+        "type": "tutorial"
+      },
+      {
+        "subject": "Break",
+        "time": "12:00 – 14:00",
+        "room": "jahan mrzi jao",
+        "type": "break"
+      },
+      {
+        "subject": "DBMS",
+        "time": "14:00 – 15:50",
+        "room": "CyberSecurity-Lab",
+        "type": "lab"
+      },
+      {
+        "subject": "Software Engineering",
+        "time": "16:00 – 16:50",
+        "room": "3045",
+        "type": "lecture"
+      }
+    ]
+  }
+}
